@@ -1,5 +1,5 @@
 # build
-FROM node:20-alpine AS build
+FROM node:22-alpine AS front-build
 
 WORKDIR /app
 COPY package.json package-lock.json* ./
@@ -8,7 +8,7 @@ COPY . .
 RUN npm run build
 
 #run
-FROM node:20-alpine
+FROM node:22-alpine
 WORKDIR /app
 RUN npm i -g serve
 COPY --from=build /app/dist ./dist
