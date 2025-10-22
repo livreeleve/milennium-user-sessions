@@ -1,0 +1,39 @@
+services:
+  milennium-session-server:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    env_file:
+      - ./back-end/.env
+    container_name: milennium-session-server
+    restart: unless-stopped
+    ports:
+      - "3339:3333"
+    networks:
+      - lel-app
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "2"
+
+  milennium-front:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    container_name: milennium-front
+    restart: unless-stopped
+    ports:
+      - "3012:3000"
+    networks:
+      - lel-app
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+    
+
+networks:
+  lel-app:
+    external: true
